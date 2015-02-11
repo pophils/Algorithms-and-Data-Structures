@@ -4,7 +4,6 @@ class ExercisesException(Exception):
     """
     pass
 
-
 from Chapter6_Stacks_Queues.ArrayStack import Stack
 
 
@@ -51,14 +50,7 @@ class Exercises():
 
 if __name__ == '__main__':
     ex = Exercises()
-    s = Stack(22)
-    print("Stack size: %s" % s.size())
-    s.push(10)
-    s.push(100)
-    s.push(1000)
-    print("Stack size: %s" % s.size())
-    ex.emptyStackRecursively(s)
-    print("Stack size: %s" % s.size())
+    ex.transferStack()
 
 
 
