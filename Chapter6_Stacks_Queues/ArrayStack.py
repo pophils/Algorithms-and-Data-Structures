@@ -10,13 +10,18 @@ class Stack():
      Class implement an array based Stack ADT.
      Through an adapter design pattern, it makes use of
      built-in list and some of its attributes.
+
+     All basic operations run in constant O(1) time complexity except for
+     pop and push that runs in amortized O(1) and occasional worst case
+     O(n) time complexity when the underlying list has to be re-sized. n is the
+     current size of the stack.
     """
 
     def __init__(self, capacity=None):
         """
         Init the stack with appropriate attributes
         :param capacity: The capacity of the stack. Its optional.
-        :exception: Raises stackException if capacity given is not an integer
+        :exception: Raises StackException if capacity given is not an integer.
         """
         if capacity is None:
             self.__data = []
@@ -31,11 +36,10 @@ class Stack():
     def push(self, item):
         """
         Push a new item to the stack.
-        if capacity of the stack is given at init, the stack is
-        re-sized immediately before pushing new item if the stack
-        size is equal to the capacity.
+        if capacity of the stack is given at init, the underlying list is
+        re-sized immediately before pushing the new item if the stack size
+        is equal to the list capacity.
         :param item: Item to be pushed to the stack
-        :return: void
         """
         currentLen = len(self.__data)
         if currentLen == self.__size:
@@ -48,7 +52,7 @@ class Stack():
         """
         Remove and return the last item of the stack.
         Resize underlying list if the size of the stack is
-        less or equal a quarter of its length
+        less or equal to quarter of its length
         :return: Object
         :exception: Raises a StackException if stack is empty.
         """
@@ -63,9 +67,18 @@ class Stack():
         self.__size -= 1
         return item
 
+    def top(self):
+        if self.isEmpty():
+            raise StackException("The stack is empty.")
+        return self.__data[self.__size-1]
+
+    def size(self):
+        return self.__size
+
     def __resize(self, newCapacity):
         """
-        Resize the stack.
+        Resize the stack. Its worst case running time is O(n)
+        where n is the current size of the stack.
         :param newCapacity: New capacity of the stack
         :return:void
         """
@@ -76,31 +89,32 @@ class Stack():
         self.__data = oldData
 
     def isStackDueForCompression(self):
+        """
+        Checks if the stack size could be reduced after popping the head.
+        :return: boolean
+        """
         return self.__size <= (len(self.__data)//4)
 
     def isEmpty(self):
         """
         Checks if the stack is empty.
-        :return: Boolean
+        :return: boolean
         """
         return self.__size == 0
-
-    def dataLen(self):
-        return len(self.__data)
 
     def __str__(self):
         return 'Am a stack object with %s element' % self.__size
 
     def __len__(self):
         """
-        :return:Current size of the stack
+        :return:Current size of the stack.
         """
         return self.__size
 
     def __getitem__(self, index):
         """
         An indexer for returning element of the stack
-        :param index: Index of the stack to return
+        :param index: Index of the stack to be return
         :return: returns an element of the stack.
         """
         if self.isEmpty():
@@ -110,43 +124,45 @@ class Stack():
         if abs(index) >= self.__size:
             raise StackException("Index is out of range")
 
-        self.__data.count()
         return self.__data[index]
 
-    def transfer(self, T=None):
+    def transfer(self, t=None):
 
         """
          R-6.3 Transfer the element of this stack to a destination stack.
-        :param T: Destination Stack
+        :param t: Destination Stack
         :return: The destination stack
         """
 
         if self.isEmpty():
             raise StackException("The source stack is empty")
 
-        if T is None:
-            T = Stack(self.__size)
+        if t is None:
+            t = Stack(self.__size)
         else:
-            if not isinstance(T, Stack):
+            if not isinstance(t, Stack):
                 raise StackException("The destination is not a stack type")
 
         for index in range(self.__size):
-            T.push(self.pop())
+            t.push(self.pop())
 
-        return T
+        return t
 
 
 if __name__ == '__main__':
     s1 = Stack(10)
-    print("Stack size: %s" % len(s1))
-    print("Internal data len: %s" % s1.dataLen())
+    print("Stack size: %s" % s1.size())
     print("-------------------------------------")
     print("-------------------------------------")
     s1.push(3)
     s1.push(20)
-    s1.push('Kolapo')
     s1.push(200)
-    print("Stack size: %s" % len(s1))
-    print("Internal data len: %s" % s1.dataLen())
+    print("Stack size: %s" % s1.size())
     print("-------------------------------------")
     print("-------------------------------------")
+    print("Top of stack: %s" % s1.top())
+    s1.pop()
+    print("-------------------------------------")
+    print("-------------------------------------")
+    print("Stack size: %s" % s1.size())
+    print("Top of stack: %s" % s1.top())
