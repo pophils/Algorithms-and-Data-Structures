@@ -18,7 +18,8 @@ class Exercises():
         """
         return Stack(capacity)
 
-    def transferStack(self):
+    @staticmethod
+    def transferStack():
         """
         R-6.3 Function transfers element of one stack to another.
         """
@@ -48,13 +49,28 @@ class Exercises():
             s.pop()
             self.emptyStackRecursively(s)
 
+    @staticmethod
+    def reverseList(seq):
+
+        """
+        R-6.5: Function use a stack in reversing the element of a list.
+               Function's complexity is O(n) i.e running time grows proportionally
+               with 2n
+               :param seq: List whose element is to be reversed.
+        """
+        if seq is None:
+            raise ExercisesException("The list argument is undefined.")
+        if not isinstance(seq, list):
+            raise ExercisesException("The sequence is not a list instance.")
+
+        seqLen = len(seq)
+        if seqLen > 1:
+            tempStack = Stack(seqLen)
+            for item in seq:
+                tempStack.push(item)
+            for index in range(seqLen):
+                seq[index] = tempStack.pop()
+        return seq
+
 if __name__ == '__main__':
-    ex = Exercises()
-    ex.transferStack()
-
-
-
-
-
-
-
+    print(Exercises.reverseList((1,2,3,4)))
