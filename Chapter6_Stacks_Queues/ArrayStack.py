@@ -4,6 +4,7 @@ class StackException(Exception):
     """
     pass
 
+from math import ceil
 
 class Stack():
     """
@@ -44,9 +45,8 @@ class Stack():
         :param item: Item to be pushed to the stack
         """
         if self.__capacityGiven:
-            currentLen = len(self.__data)
-            if currentLen == self.__size:
-                self.__resize(currentLen*2)
+            if len(self.__data) == self.__size:
+                self.__resize(ceil(self.__size*2.5))
             self.__data[self.__size] = item
 
         else:
@@ -71,7 +71,7 @@ class Stack():
             self.__data[self.__front] = None
 
             if self.isStackDueForCompression():
-                self.__resize(len(self.__data)//2)
+                self.__resize(ceil(self.__size*1.5))
         else:
             item = self.__data.pop()
 
@@ -94,11 +94,14 @@ class Stack():
         :param newCapacity: New capacity of the stack
         :return:void
         """
-        oldData = [None] * newCapacity
-        for index in range(self.__size):
-            oldData[index] = self.__data[index]
+        if not isinstance(newCapacity, int):
+            raise TypeError("The new capacity is not an integer.")
 
-        self.__data = oldData
+        tempData = [None] * newCapacity
+        for index in range(self.__size):
+            tempData[index] = self.__data[index]
+
+        self.__data = tempData
 
     def isStackDueForCompression(self):
         """
@@ -122,21 +125,6 @@ class Stack():
         :return:Current size of the stack.
         """
         return self.__size
-
-    def __getitem__(self, index):
-        """
-        An indexer for returning element of the stack
-        :param index: Index of the stack to be return
-        :return: returns an element of the stack.
-        """
-        if self.isEmpty():
-            raise StackException("The stack is empty")
-        if not isinstance(index, int):
-            raise StackException("Index must be nothing but an integer")
-        if abs(index) >= self.__size:
-            raise StackException("Index is out of range")
-
-        return self.__data[index]
 
     def transfer(self, t=None):
 
