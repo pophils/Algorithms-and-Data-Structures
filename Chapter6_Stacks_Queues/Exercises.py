@@ -72,5 +72,7 @@ class Exercises():
                 seq[index] = tempStack.pop()
         return seq
 
+
+
 if __name__ == '__main__':
     print(Exercises.reverseList((1,2,3,4)))
