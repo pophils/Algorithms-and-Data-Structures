@@ -72,7 +72,48 @@ class Exercises():
                 seq[index] = tempStack.pop()
         return seq
 
+    @staticmethod
+    def creativityQ1(r, s, t):
+        """
+        C-6.23: Given three non-empty stacks R, S,and T, Function provides sequence of operation
+                that results in S storing all elements originally in T below all of S’s original
+                elements, with both sets of those elements in their original order.
+                The final configuration for R should be the same as its original configuration.
+                For example, if R =[1,2,3], S =[4,5],and T =[6,7,8,9], the final configuration should
+                have R =[1,2,3] and S =[6,7,8,9,4,5].
+        :return: tuple of r,s,t
+        """
+
+        if not isinstance(r, Stack):
+            raise ExercisesException("r is not a Stack type")
+        if not isinstance(s, Stack):
+            raise ExercisesException("s is not a Stack type")
+        if not isinstance(t, Stack):
+            raise ExercisesException("t is not a Stack type")
+
+        if not t.isEmpty():
+            tLen = t.size()
+            r = t.transfer(r)
+            while tLen > 0:
+                s.push(r.pop())
+                tLen -= 1
 
 
 if __name__ == '__main__':
-    print(Exercises.reverseList((1,2,3,4)))
+    r = Stack(3)
+    s = Stack(4)
+    t = Stack(6)
+
+
+    r.push(11111)
+    r.push(22222)
+
+    s.push(1)
+    s.push(2)
+    s.push(3)
+
+    t.push(120)
+    t.push(121)
+    t.push(122)
+
+    Exercises.creativityQ1(r, s, t)

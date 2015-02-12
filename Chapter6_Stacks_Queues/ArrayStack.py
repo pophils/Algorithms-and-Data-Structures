@@ -25,13 +25,15 @@ class Stack():
         """
         if capacity is None:
             self.__data = []
+            self.__capacityGiven = False
         else:
             if not isinstance(capacity, int):
                 raise StackException("The size attribute must be an integer.")
 
             self.__data = [None] * capacity
-            self.__size = 0
             self.__capacityGiven = True
+        self.__size = 0
+        self.__front = 0
 
     def push(self, item):
         """
@@ -41,12 +43,17 @@ class Stack():
         is equal to the list capacity.
         :param item: Item to be pushed to the stack
         """
-        currentLen = len(self.__data)
-        if currentLen == self.__size:
-            self.__resize(currentLen*2)
+        if self.__capacityGiven:
+            currentLen = len(self.__data)
+            if currentLen == self.__size:
+                self.__resize(currentLen*2)
+            self.__data[self.__size] = item
 
-        self.__data[self.__size] = item
+        else:
+            self.__data.append(item)
+
         self.__size += 1
+        self.__front = self.__size - 1
 
     def pop(self):
         """
@@ -59,12 +66,17 @@ class Stack():
         if self.isEmpty():
             raise StackException("The stack is empty.")
 
-        item = self.__data.pop()
+        if self.__capacityGiven:
+            item = self.__data[self.__front]
+            self.__data[self.__front] = None
 
-        if self.isStackDueForCompression():
-            self.__resize(len(self.__data)//2)
+            if self.isStackDueForCompression():
+                self.__resize(len(self.__data)//2)
+        else:
+            item = self.__data.pop()
 
         self.__size -= 1
+        self.__front = self.__size - 1
         return item
 
     def top(self):
@@ -150,7 +162,7 @@ class Stack():
 
 
 if __name__ == '__main__':
-    s1 = Stack(10)
+    s1 = Stack(1)
     print("Stack size: %s" % s1.size())
     print("-------------------------------------")
     print("-------------------------------------")
