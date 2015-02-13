@@ -64,6 +64,23 @@ class Queue():
 
         return item
 
+    def rotate(self, item):
+        """
+        See C-6.29: Function adds back a dequeued element into
+        a queue. Unlike enqueue, its a constant time operation,
+        since there is no need for resize operation.
+
+        Raise a QueueException if the queue is already full to its
+        capacity.
+        """
+        nextEnqueueIndex = (self.__front + self.__size) % len(self.__data)
+
+        if self.__data[nextEnqueueIndex] is not None:
+            raise QueueException("The queue is full to the capacity.")
+
+        self.__data[nextEnqueueIndex] = item
+        self.__size += 1
+
     def __resize(self, newCapacity):
         """
         Resize the queue. Its worst case running time is O(n)
@@ -144,7 +161,14 @@ if __name__ == '__main__':
 
     q.dequeue()
     q.dequeue()
-    q.dequeue()
+    sq = q.dequeue()
+
+    print("Queue size: %s" % len(q))
+    print("Top of Queue: %s" % q.top())
+    print("-------------------------------------")
+    print("-------------------------------------")
+
+    q.rotate(sq)
 
     print("Queue size: %s" % len(q))
     print("Top of Queue: %s" % q.top())

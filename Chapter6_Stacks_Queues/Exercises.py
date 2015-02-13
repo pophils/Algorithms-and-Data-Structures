@@ -99,6 +99,49 @@ class Exercises():
                 s.push(r.pop())
                 tLen -= 1
 
+    @staticmethod
+    def creativityQ2(s, item):
+        """
+        C-6.27: Function searches S for an item x using a queue.
+        :param: s: the stack to be searched.
+        :param: item: the element to be searched.
+        """
+
+        if not isinstance(s, Stack):
+            raise ExercisesException("s is not a Stack type")
+
+        stackLen = len(s)
+        found = False
+
+        if stackLen > 1:
+            tempItem = None
+            queue = Queue(stackLen)
+            for i in range(stackLen):
+                tempItem = s.pop()
+                if item == tempItem:
+                    found = True
+                    break
+
+                queue.enqueue(tempItem)
+                for j in range(len(queue)-1):
+                    tempItem = queue.dequeue()
+                    queue.enqueue(tempItem)
+
+            if found:
+                s.push(tempItem)
+
+            queueLen = len(queue)
+            if queueLen > 0:
+                while queueLen > 0:
+                    s.push(queue.dequeue())
+                    queueLen -= 1
+
+        if stackLen == 1:
+            if s.top() == item:
+                return True
+
+        return found
+
 
 class QueuedStack():
     """
@@ -137,7 +180,7 @@ class QueuedStack():
         """
         Pop an item from the stack
         Function runs in constant time O(1)and occasionally at O(n) worst case when
-        the underlying queue size needs to reduced.
+        the underlying queue size needs to be reduced.
         :return: object
         """
         if self.isEmpty():
@@ -172,44 +215,27 @@ class QueuedStack():
 
 
 if __name__ == '__main__':
-    s1 = QueuedStack()
-
-    print("Stack size: %s" % s1.size())
-    print("-------------------------------------")
-    print("-------------------------------------")
+    s1 = Stack()
 
     s1.push(3)
     s1.push(20)
     s1.push(200)
+    s1.push(30)
+    s1.push(1111)
+    s1.push(111111)
+    s1.push(11111111)
+    s1.push(False)
+    s1.push('bool')
+    s1.push([1, 2, 3, 4])
 
-    print("Stack size: %s" % s1.size())
-    print("-------------------------------------")
-    print("-------------------------------------")
-    print("Top of stack: %s" % s1.top())
+    item = 'bool'
 
-    s1.pop()
-    s1.pop()
+    print("Stack size before search : %s" % len(s1))
+    print("Stack top before search : %s" % s1.top())
 
+    print("Does stack contains %s: %s" % (item, Exercises.creativityQ2(s1, item)))
     print("-------------------------------------")
     print("-------------------------------------")
-    print("Stack size: %s" % s1.size())
-    print("Top of stack: %s" % s1.top())
 
-    s1.push('westley Snipes')
-    s1.push(20000000)
-    s1.push(300)
-    s1.push([1, 2, 3, 4, 5])
-
-    print("-------------------------------------")
-    print("-------------------------------------")
-    print("Stack size: %s" % s1.size())
-    print("Top of stack: %s" % s1.top())
-
-    s1.pop()
-    s1.pop()
-    s1.pop()
-
-    print("-------------------------------------")
-    print("-------------------------------------")
-    print("Stack size: %s" % s1.size())
-    print("Top of stack: %s" % s1.top())
+    print("Stack size after search : %s" % len(s1))
+    print("Stack top after search : %s" % s1.top())
