@@ -30,6 +30,12 @@ class Queue():
         self.__front = 0
 
     def enqueue(self, item):
+        """
+        Add a new item to the queue.
+        the underlying list is re-sized immediately before pushing
+        the new item if the queue size is equal to the list capacity.
+        :param item: item to be added.
+        """
         if self.__size == len(self.__data):
             self.__resize(ceil(self.__size * 2.5))
 
@@ -40,7 +46,11 @@ class Queue():
         self.__size += 1
 
     def dequeue(self):
-
+        """
+        Remove and return an item from the queue
+        :return: object
+        :exception: raises a QueueException if queue is empty
+        """
         if self.isEmpty():
             raise QueueException("Queue is empty.")
 
@@ -55,6 +65,11 @@ class Queue():
         return item
 
     def __resize(self, newCapacity):
+        """
+        Resize the queue. Its worst case running time is O(n)
+        where n is the current size of the queue.
+        :param newCapacity: New capacity of the queue
+        """
 
         if not isinstance(newCapacity, int):
             raise TypeError("The new capacity is not an integer type.")
@@ -71,14 +86,27 @@ class Queue():
         self.__front = 0
 
     def isEmpty(self):
+        """
+        Function checks if queue is empty.
+        :return: boolean
+        """
         return self.__size < 1
 
     def top(self):
+        """
+        Functions return the first item of the queue.
+        :return: object
+        :exception: raises a QueueException if queue is empty
+        """
         if self.isEmpty():
             raise QueueException("Queue is empty.")
         return self.__data[self.__front]
 
     def __len__(self):
+        """
+        Function return the size of the queue
+        :return: int
+        """
         return self.__size
 
     def __isQueueDueForCompression(self):
@@ -89,6 +117,10 @@ class Queue():
         return self.__size <= (len(self.__data)//4)
 
     def __str__(self):
+        """
+        ToString() of Queue object
+        :return: str
+        """
         return 'Am a Queue object with %s element' % self.__size
 
 if __name__ == '__main__':

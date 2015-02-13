@@ -5,6 +5,7 @@ class ExercisesException(Exception):
     pass
 
 from Chapter6_Stacks_Queues.ArrayStack import Stack
+from Chapter6_Stacks_Queues.ArrayQueue import Queue
 
 
 class Exercises():
@@ -99,21 +100,116 @@ class Exercises():
                 tLen -= 1
 
 
+class QueuedStack():
+    """
+    C-6.24: Class implement a Stack ADT using a single Queue as an
+    instance variable and only a constant memory within the
+    method bodies
+    """
+
+    def __init__(self, queue=None, capacity=10):
+
+        if queue is None:
+            self.__queue = Queue(capacity)
+        else:
+            if not isinstance(queue, Queue):
+                raise ExercisesException("The queue is not a Queue type")
+            self.__queue = queue
+
+    def push(self, item):
+        """
+        Push an item to the stack.
+        Time complexity is O(1) and O(n) at worst case where n is the current size of the
+        underlying queue before pushing a new item.
+        :param item: item to be pushed into the stack.
+        """
+        if len(self.__queue) < 1:
+            self.__queue.enqueue(item)
+        else:
+            # currentLen = len(self.__queue)
+            self.__queue.enqueue(item)
+            for index in range(len(self.__queue)-1):
+                tempItem = self.__queue.dequeue()
+                self.__queue.enqueue(tempItem)
+                # currentLen -= 1
+
+    def pop(self):
+        """
+        Pop an item from the stack
+        Function runs in constant time O(1)and occasionally at O(n) worst case when
+        the underlying queue size needs to reduced.
+        :return: object
+        """
+        if self.isEmpty():
+            raise ExercisesException("The stack is empty.")
+        return self.__queue.dequeue()
+
+    def top(self):
+        """
+        Function returns the first element of the stack.
+        it runs in constant O(1) time complexity.
+        :return: object
+        """
+        if self.isEmpty():
+            raise ExercisesException("The stack is empty.")
+        return self.__queue.top()
+
+    def size(self):
+        """
+        Function returns the size of the stack.
+        Runs in constant O(1) time complexity.
+        :return: int
+        """
+        return len(self.__queue)
+
+    def isEmpty(self):
+        """
+        Function checks if the stack is empty.
+        Runs in constant time O(1) complexity.
+        :return: boolean
+        """
+        return self.__queue.isEmpty()
+
+
 if __name__ == '__main__':
-    r = Stack(3)
-    s = Stack(4)
-    t = Stack(6)
+    s1 = QueuedStack()
 
+    print("Stack size: %s" % s1.size())
+    print("-------------------------------------")
+    print("-------------------------------------")
 
-    r.push(11111)
-    r.push(22222)
+    s1.push(3)
+    s1.push(20)
+    s1.push(200)
 
-    s.push(1)
-    s.push(2)
-    s.push(3)
+    print("Stack size: %s" % s1.size())
+    print("-------------------------------------")
+    print("-------------------------------------")
+    print("Top of stack: %s" % s1.top())
 
-    t.push(120)
-    t.push(121)
-    t.push(122)
+    s1.pop()
+    s1.pop()
 
-    Exercises.creativityQ1(r, s, t)
+    print("-------------------------------------")
+    print("-------------------------------------")
+    print("Stack size: %s" % s1.size())
+    print("Top of stack: %s" % s1.top())
+
+    s1.push('westley Snipes')
+    s1.push(20000000)
+    s1.push(300)
+    s1.push([1, 2, 3, 4, 5])
+
+    print("-------------------------------------")
+    print("-------------------------------------")
+    print("Stack size: %s" % s1.size())
+    print("Top of stack: %s" % s1.top())
+
+    s1.pop()
+    s1.pop()
+    s1.pop()
+
+    print("-------------------------------------")
+    print("-------------------------------------")
+    print("Stack size: %s" % s1.size())
+    print("Top of stack: %s" % s1.top())

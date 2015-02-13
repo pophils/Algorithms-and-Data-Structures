@@ -92,7 +92,6 @@ class Stack():
         Resize the stack. Its worst case running time is O(n)
         where n is the current size of the stack.
         :param newCapacity: New capacity of the stack
-        :return:void
         """
         if not isinstance(newCapacity, int):
             raise TypeError("The new capacity is not an integer.")
