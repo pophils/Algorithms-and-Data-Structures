@@ -4,8 +4,8 @@ class ExercisesException(Exception):
     """
     pass
 
-from Chapter6_Stacks_Queues.ArrayStack import Stack
-from Chapter6_Stacks_Queues.ArrayQueue import Queue
+from Chapter6_Stacks_Queues.ArrayStack import ArrayStack
+from Chapter6_Stacks_Queues.ArrayQueue import ArrayQueue
 
 
 class Exercises():
@@ -17,7 +17,7 @@ class Exercises():
         """
         Creates a new stack
         """
-        return Stack(capacity)
+        return ArrayStack(capacity)
 
     @staticmethod
     def transferStack():
@@ -66,7 +66,7 @@ class Exercises():
 
         seqLen = len(seq)
         if seqLen > 1:
-            tempStack = Stack(seqLen)
+            tempStack = ArrayStack(seqLen)
             for item in seq:
                 tempStack.push(item)
             for index in range(seqLen):
@@ -85,11 +85,11 @@ class Exercises():
         :return: tuple of r,s,t
         """
 
-        if not isinstance(r, Stack):
+        if not isinstance(r, ArrayStack):
             raise ExercisesException("r is not a Stack type")
-        if not isinstance(s, Stack):
+        if not isinstance(s, ArrayStack):
             raise ExercisesException("s is not a Stack type")
-        if not isinstance(t, Stack):
+        if not isinstance(t, ArrayStack):
             raise ExercisesException("t is not a Stack type")
 
         if not t.isEmpty():
@@ -107,7 +107,7 @@ class Exercises():
         :param: item: the element to be searched.
         """
 
-        if not isinstance(s, Stack):
+        if not isinstance(s, ArrayStack):
             raise ExercisesException("s is not a Stack type")
 
         stackLen = len(s)
@@ -115,7 +115,7 @@ class Exercises():
 
         if stackLen > 1:
             tempItem = None
-            queue = Queue(stackLen)
+            queue = ArrayQueue(stackLen)
             for i in range(stackLen):
                 tempItem = s.pop()
                 if item == tempItem:
@@ -153,9 +153,9 @@ class QueuedStack():
     def __init__(self, queue=None, capacity=10):
 
         if queue is None:
-            self.__queue = Queue(capacity)
+            self.__queue = ArrayQueue(capacity)
         else:
-            if not isinstance(queue, Queue):
+            if not isinstance(queue, ArrayQueue):
                 raise ExercisesException("The queue is not a Queue type")
             self.__queue = queue
 
@@ -215,7 +215,7 @@ class QueuedStack():
 
 
 if __name__ == '__main__':
-    s1 = Stack()
+    s1 = ArrayStack()
 
     s1.push(3)
     s1.push(20)

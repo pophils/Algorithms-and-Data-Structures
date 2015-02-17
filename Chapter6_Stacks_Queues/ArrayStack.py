@@ -5,8 +5,10 @@ class StackException(Exception):
     pass
 
 from math import ceil
+from AbstractBases.Stack import Stack as AbstractBaseStack
 
-class Stack():
+
+class ArrayStack(AbstractBaseStack):
     """
      Class implement an array based Stack ADT.
      Through an adapter design pattern, it makes use of
@@ -34,7 +36,7 @@ class Stack():
             self.__data = [None] * capacity
             self.__capacityGiven = True
         self.__size = 0
-        self.__front = 0
+        self.__nextFront = 0
 
     def push(self, item):
         """
@@ -47,13 +49,15 @@ class Stack():
         if self.__capacityGiven:
             if len(self.__data) == self.__size:
                 self.__resize(ceil(self.__size*2.5))
-            self.__data[self.__size] = item
+
+            # 1 2 3 4 5 6 None None None None None size = 6 len 12
+            self.__data[self.__nextFront] = item
+            self.__nextFront += 1
 
         else:
             self.__data.append(item)
 
         self.__size += 1
-        self.__front = self.__size - 1
 
     def pop(self):
         """
@@ -63,29 +67,40 @@ class Stack():
         :return: Object
         :exception: Raises a StackException if stack is empty.
         """
-        if self.isEmpty():
-            raise StackException("The stack is empty.")
 
         if self.__capacityGiven:
-            item = self.__data[self.__front]
-            self.__data[self.__front] = None
+            item = self.__data[self.__nextFront - 1]
+            self.__data[self.__nextFront - 1] = None
+            self.__nextFront -= 1
+            self.__size -= 1
+
+            if self.isEmpty():
+                self.__nextFront = 0
 
             if self.isStackDueForCompression():
                 self.__resize(ceil(self.__size*1.5))
         else:
             item = self.__data.pop()
+            self.__size -= 1
 
-        self.__size -= 1
-        self.__front = self.__size - 1
         return item
 
     def top(self):
         if self.isEmpty():
             raise StackException("The stack is empty.")
+
         return self.__data[self.__size-1]
 
     def size(self):
         return self.__size
+
+    def clear(self):
+        """
+        Clears all the element of the stack.
+        """
+        self.__data.clear()
+        self.__size = 0
+        self.__nextFront = 0
 
     def __resize(self, newCapacity):
         """
@@ -93,14 +108,18 @@ class Stack():
         where n is the current size of the stack.
         :param newCapacity: New capacity of the stack
         """
+
         if not isinstance(newCapacity, int):
             raise TypeError("The new capacity is not an integer.")
 
-        tempData = [None] * newCapacity
-        for index in range(self.__size):
-            tempData[index] = self.__data[index]
+        if self.__capacityGiven:
+            tempData = [None] * newCapacity
+            cursor = 0
 
-        self.__data = tempData
+            while cursor < self.__size:
+                tempData[cursor] = self.__data[cursor]
+                cursor += 1
+            self.__data = tempData
 
     def isStackDueForCompression(self):
         """
@@ -117,7 +136,7 @@ class Stack():
         return self.__size == 0
 
     def __str__(self):
-        return 'Am a stack object with %s element' % self.__size
+        return 'Am a stack object with %s element(s)' % self.__size
 
     def __len__(self):
         """
@@ -125,8 +144,30 @@ class Stack():
         """
         return self.__size
 
-    def transfer(self, t=None):
+    def toList(self):
+        if self.__capacityGiven:
+            tempData = [None] * self.__size
+            tempFront = self.__nextFront - 1
 
+            for index in range(self.__size):
+                tempData[index] = self.__data[tempFront]
+                tempFront -= 1
+            return tempData
+        else:
+            return [item for item in self.__data]
+
+    def __iter__(self):
+        if self.__capacityGiven:
+            tempFront = self.__nextFront - 1
+
+            for index in range(self.__size):
+                yield self.__data[tempFront]
+                tempFront -= 1
+
+        else:
+            return (item for item in self.__data)
+
+    def transfer(self, t=None):
         """
          R-6.3 Transfer the element of this stack to a destination stack.
         :param t: Destination Stack
@@ -137,9 +178,9 @@ class Stack():
             raise StackException("The source stack is empty")
 
         if t is None:
-            t = Stack(self.__size)
+            t = ArrayStack(self.__size)
         else:
-            if not isinstance(t, Stack):
+            if not isinstance(t, ArrayStack):
                 raise StackException("The destination is not a stack type")
 
         for index in range(self.__size):
@@ -147,21 +188,30 @@ class Stack():
 
         return t
 
-
 if __name__ == '__main__':
-    s1 = Stack(1)
+    s1 = ArrayStack(1)
     print("Stack size: %s" % s1.size())
     print("-------------------------------------")
     print("-------------------------------------")
+
     s1.push(3)
+    print("-------------------------------------")
+    print("Top of stack: %s" % s1.top())
+
     s1.push(20)
-    s1.push(200)
-    print("Stack size: %s" % s1.size())
-    print("-------------------------------------")
     print("-------------------------------------")
     print("Top of stack: %s" % s1.top())
-    s1.pop()
+
+    s1.push('YUI')
     print("-------------------------------------")
-    print("-------------------------------------")
-    print("Stack size: %s" % s1.size())
     print("Top of stack: %s" % s1.top())
+
+    s1.push([1, 'google', 'knn', 2.0345, {1: 2, 2: 1}])
+    print("-------------------------------------")
+    print("Top of stack: %s" % s1.top())
+
+    print(s1.toList())
+
+    for i in s1:
+        print(type(i))
+        print(i)

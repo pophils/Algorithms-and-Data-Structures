@@ -6,8 +6,10 @@ class QueueException(Exception):
     pass
 
 from math import ceil
+from AbstractBases.Queue import Queue as AbstractBaseQueue
 
-class Queue():
+
+class ArrayQueue(AbstractBaseQueue):
     """
      Class implement an array based Queue ADT.
      Through an adapter design pattern, it makes use of
@@ -23,7 +25,6 @@ class Queue():
         """
         Init the queue with necessary attributes
         :param capacity: defaults to 10
-        :return:
         """
         self.__data = [None] * capacity
         self.__size = 0
@@ -119,6 +120,56 @@ class Queue():
             raise QueueException("Queue is empty.")
         return self.__data[self.__front]
 
+    def clear(self):
+        """
+        Clear all the element of the queue
+        """
+        self.__data.clear()
+
+    def size(self):
+        return self.__size
+
+    def __iter__(self):
+        tempFront = self.__front
+        for index in range(self.__size):
+            yield self.__data[tempFront]
+            tempFront = (tempFront + 1) % len(self.__data)
+
+    def transfer(self, t=None):
+        """
+         R-6.3 Transfer the element of this stack to a new queue.
+        :param t: Destination Queue
+        :return: The destination queue
+        """
+        if self.isEmpty():
+            raise QueueException("The source queue is empty")
+
+        if t is None:
+            t = ArrayQueue(self.__size)
+        else:
+            if not isinstance(t, ArrayQueue):
+                raise QueueException("The destination is not a queue type")
+
+        tempFront = self.__front
+        for index in range(self.__size):
+            t.enqueue(self.__data[tempFront])
+            tempFront = (tempFront + 1) % len(self.__data)
+
+        return t
+
+    def toList(self):
+        """
+        Returns a list of the queue items
+        :return: list
+        """
+        tempList = [None] * self.__size
+        tempFront = self.__front
+
+        for index in range(self.__size):
+            tempList[index] = self.__data[tempFront]
+            tempFront = (tempFront + 1) % len(self.__data)
+        return tempList
+
     def __len__(self):
         """
         Function return the size of the queue
@@ -138,10 +189,10 @@ class Queue():
         ToString() of Queue object
         :return: str
         """
-        return 'Am a Queue object with %s element' % self.__size
+        return 'Am a Queue object with %s element(s)' % self.__size
 
 if __name__ == '__main__':
-    q = Queue(5)
+    q = ArrayQueue(5)
 
     print("Queue size: %s" % len(q))
     print("-------------------------------------")
@@ -151,6 +202,7 @@ if __name__ == '__main__':
     q.enqueue(200)
     q.enqueue(2000)
     q.enqueue(20000)
+    q.enqueue({1:1, 2: 'huffman code', 3: 'Star wars'})
     q.enqueue(20111)
     q.enqueue(2001111)
 
@@ -158,6 +210,7 @@ if __name__ == '__main__':
     print("Top of Queue: %s" % q.top())
     print("-------------------------------------")
     print("-------------------------------------")
+    print(q.toList())
 
     q.dequeue()
     q.dequeue()
@@ -174,3 +227,9 @@ if __name__ == '__main__':
     print("Top of Queue: %s" % q.top())
     print("-------------------------------------")
     print("-------------------------------------")
+
+    print(q.toList())
+
+    for i in q:
+        print(type(i))
+        print(i)
