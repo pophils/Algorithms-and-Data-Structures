@@ -5,7 +5,7 @@ from abc import ABCMeta, abstractmethod
 class Queue (metaclass=ABCMeta):
 
     @abstractmethod
-    def enqueue(self):
+    def enqueue(self, e):
         """
          Push an item to the Queue.
         """
@@ -65,4 +65,10 @@ class Queue (metaclass=ABCMeta):
     def __iter__(self):
         """
         An iterator for over the element of the queue.
+        """
+
+    @abstractmethod
+    def __len__(self):
+        """
+        Returns the len of the Queue
         """

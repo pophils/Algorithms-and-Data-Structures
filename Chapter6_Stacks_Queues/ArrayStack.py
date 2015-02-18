@@ -1,11 +1,8 @@
-class StackException(Exception):
-    """
-    Used with the Stack class to manage exception
-    """
-    pass
+
 
 from math import ceil
 from AbstractBases.Stack import Stack as AbstractBaseStack
+from AppException.StackException import StackException
 
 
 class ArrayStack(AbstractBaseStack):
@@ -183,13 +180,18 @@ class ArrayStack(AbstractBaseStack):
             if not isinstance(t, ArrayStack):
                 raise StackException("The destination is not a stack type")
 
-        for index in range(self.__size):
-            t.push(self.pop())
+        tempList = self.toList()
+
+        for cursor in range(self.__size):
+            t.push(tempList.pop())
 
         return t
 
+from Chapter7_Linked_List.LinkedStack import LinkedStack
+
 if __name__ == '__main__':
     s1 = ArrayStack(1)
+    s2 = LinkedStack()
     print("Stack size: %s" % s1.size())
     print("-------------------------------------")
     print("-------------------------------------")
@@ -215,3 +217,41 @@ if __name__ == '__main__':
     for i in s1:
         print(type(i))
         print(i)
+
+    print("#####################################")
+    print("-------------------------------------")
+    print("Linked Section")
+    print("-------------------------------------")
+    print("-------------------------------------")
+
+    s2.push(3)
+    print("-------------------------------------")
+    print("Top of stack: %s" % s2.top())
+
+    s2.push(20)
+    print("-------------------------------------")
+    print("Top of stack: %s" % s2.top())
+
+    s2.push('YUI')
+    print("-------------------------------------")
+    print("Top of stack: %s" % s2.top())
+
+    s2.push([1, 'google', 'knn', 2.0345, {1: 2, 2: 1}])
+    print("-------------------------------------")
+    print("Top of stack: %s" % s2.top())
+
+    print(s2.toList())
+
+    for i in s2:
+        print(type(i))
+        print(i)
+
+    print("-------------------------------------")
+    w = s2.transfer()
+    print(s2.toList())
+    print(w.toList())
+    print("-------------------------------------")
+    print("-------------------------------------")
+    q = s1.transfer()
+    print(s1.toList())
+    print(q.toList())

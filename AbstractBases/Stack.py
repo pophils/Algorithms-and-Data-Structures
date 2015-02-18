@@ -5,7 +5,7 @@ from abc import ABCMeta, abstractmethod
 class Stack (metaclass=ABCMeta):
 
     @abstractmethod
-    def push(self):
+    def push(self, e):
         """
          Push an item to the stack.
         """
@@ -66,4 +66,10 @@ class Stack (metaclass=ABCMeta):
     def __iter__(self):
         """
         An iterator for the stack
+        """
+
+    @abstractmethod
+    def __len__(self):
+        """
+        Returns the len of the stack
         """

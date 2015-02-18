@@ -86,12 +86,6 @@ class PositionalListADT (metaclass=ABCMeta):
         """
 
     @abstractmethod
-    def clear(self):
-        """
-        Clears all the element of the list.
-        """
-
-    @abstractmethod
     def __iter__(self):
         """
         An iterator for over the element of the List.

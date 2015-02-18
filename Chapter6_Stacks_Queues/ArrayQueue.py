@@ -1,12 +1,7 @@
-
-class QueueException(Exception):
-    """
-    Used with the Queue class to manage exception
-    """
-    pass
-
 from math import ceil
 from AbstractBases.Queue import Queue as AbstractBaseQueue
+from AppException.QueueException import QueueException
+from Chapter7_Linked_List.LinkedQueue import LinkedQueue
 
 
 class ArrayQueue(AbstractBaseQueue):
@@ -182,7 +177,7 @@ class ArrayQueue(AbstractBaseQueue):
         Checks if the Queue size could be reduced after dequeueing the top.
         :return: boolean
         """
-        return self.__size <= (len(self.__data)//4)
+        return self.__size <= (len(self.__data) // 4)
 
     def __str__(self):
         """
@@ -190,6 +185,7 @@ class ArrayQueue(AbstractBaseQueue):
         :return: str
         """
         return 'Am a Queue object with %s element(s)' % self.__size
+
 
 if __name__ == '__main__':
     q = ArrayQueue(5)
@@ -202,7 +198,7 @@ if __name__ == '__main__':
     q.enqueue(200)
     q.enqueue(2000)
     q.enqueue(20000)
-    q.enqueue({1:1, 2: 'huffman code', 3: 'Star wars'})
+    q.enqueue({1: 1, 2: 'huffman code', 3: 'Star wars'})
     q.enqueue(20111)
     q.enqueue(2001111)
 
@@ -214,14 +210,7 @@ if __name__ == '__main__':
 
     q.dequeue()
     q.dequeue()
-    sq = q.dequeue()
-
-    print("Queue size: %s" % len(q))
-    print("Top of Queue: %s" % q.top())
-    print("-------------------------------------")
-    print("-------------------------------------")
-
-    q.rotate(sq)
+    q.dequeue()
 
     print("Queue size: %s" % len(q))
     print("Top of Queue: %s" % q.top())

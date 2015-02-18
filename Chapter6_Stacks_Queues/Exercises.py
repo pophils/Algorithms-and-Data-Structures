@@ -1,11 +1,7 @@
-class ExercisesException(Exception):
-    """
-    Exception class handling all exceptions.
-    """
-    pass
 
 from Chapter6_Stacks_Queues.ArrayStack import ArrayStack
 from Chapter6_Stacks_Queues.ArrayQueue import ArrayQueue
+from AppException.ExercisesException import ExercisesException
 
 
 class Exercises():
