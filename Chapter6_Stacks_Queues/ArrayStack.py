@@ -32,6 +32,7 @@ class ArrayStack(AbstractBaseStack):
 
             self.__data = [None] * capacity
             self.__capacityGiven = True
+            self.__initCapacity = capacity
         self.__size = 0
         self.__nextFront = 0
 
@@ -95,7 +96,10 @@ class ArrayStack(AbstractBaseStack):
         """
         Clears all the element of the stack.
         """
-        self.__data.clear()
+        if self.__capacityGiven:
+            self.__data = [None] * self.__initCapacity
+        else:
+            self.__data.clear()
         self.__size = 0
         self.__nextFront = 0
 

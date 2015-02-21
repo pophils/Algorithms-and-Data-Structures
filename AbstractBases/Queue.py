@@ -15,7 +15,7 @@ class Queue (metaclass=ABCMeta):
         """
         Remove and return the first item of the queue.
         :return: Object
-        :exception: Raises a QueueException if stack is empty.
+        :exception: Raises a QueueException if the queue is empty.
         """
 
     @abstractmethod
@@ -23,7 +23,7 @@ class Queue (metaclass=ABCMeta):
         """
         Returns the first element in the queue.
         :return: Object
-        :exception: Raises a StackException if stack is empty.
+        :exception: Raises a StackException if the queue is empty.
         """
 
     @abstractmethod

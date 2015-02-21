@@ -210,28 +210,146 @@ class QueuedStack():
         return self.__queue.isEmpty()
 
 
+from AbstractBases.Deque import Deque as AbstractBaseDeque
+from AppException.DequeException import DequeException
+
+
+class StackedDeque(AbstractBaseDeque):
+    """
+    C-6.26: Class implement a Double-ended Queue ADT using two
+    Stacks as an instance variable
+    """
+
+    def __init__(self):
+        self.__mainStack = ArrayStack()
+        self.__tempStack = ArrayStack()
+        self.__size = 0
+
+    def append(self, e):
+        """
+        Runs in amortized O(1) time. Occasionally O(n) times if there is a resizing.
+        :param e: Item to be appended
+        """
+        self.__mainStack.push(e)
+        self.__size += 1
+
+    def appendLeft(self, e):
+        """
+        This will take O(2n) worst case time where n is the current size of the queue
+        :param e: item to be appended
+        """
+        for index in range(self.__size):
+            self.__tempStack.push(self.__mainStack.pop())
+
+        self.__mainStack.push(e)
+        for index in range(self.__size):
+            self.__mainStack.push(self.__tempStack.pop())
+
+        self.__size += 1
+
+    def pop(self):
+        """
+        Runs in constant O(1) time.
+        :return: Object
+        """
+        self.__size -= 1
+        return self.__mainStack.pop()
+
+    def popLeft(self):
+        """
+        This will take O(2n) worst case time where n is the current size of the queue
+        :return: object
+        """
+        for index in range(self.__size - 1):
+            self.__tempStack.push(self.__mainStack.pop())
+
+        e = self.__mainStack.pop()
+        self.__size -= 1
+
+        for index in range(self.__size):
+            self.__mainStack.push(self.__tempStack.pop())
+
+        return e
+
+    def clear(self):
+        self.__mainStack.clear()
+        self.__size = 0
+
+    def rotate(self, k):
+        """
+        Runs in O(2kn) worst case time.
+        :param k:
+        """
+        if not isinstance(k, int):
+            raise TypeError("k must be an integer.")
+
+        if self.isEmpty():
+            raise DequeException("Deque is empty.")
+
+        for index in range(k):
+            currentFirst = self.__mainStack.pop()
+            for cursor in range(self.__size - 1):
+                self.__tempStack.push(self.__mainStack.pop())
+            self.__mainStack.push(currentFirst)
+            for cursor in range(self.__size - 1):
+                self.__mainStack.push(self.__tempStack.pop())
+
+    def size(self):
+        return self.__size
+
+    def toList(self):
+        return self.__mainStack.toList()
+
+    def __iter__(self):
+        pass
+
+    def __len__(self):
+        return self.__size
+
+    def isEmpty(self):
+        return self.__size == 0
+
+
 if __name__ == '__main__':
-    s1 = ArrayStack()
+    s1 = StackedDeque()
 
-    s1.push(3)
-    s1.push(20)
-    s1.push(200)
-    s1.push(30)
-    s1.push(1111)
-    s1.push(111111)
-    s1.push(11111111)
-    s1.push(False)
-    s1.push('bool')
-    s1.push([1, 2, 3, 4])
+    s1.append(3)
+    s1.append(20)
+    s1.append(200)
 
-    item = 'bool'
+    print("Stack size: %s" % len(s1))
+    print(s1.toList())
 
-    print("Stack size before search : %s" % len(s1))
-    print("Stack top before search : %s" % s1.top())
+    s1.appendLeft(30)
+    s1.appendLeft([1, 3, 5, 7, 'google'])
 
-    print("Does stack contains %s: %s" % (item, Exercises.creativityQ2(s1, item)))
-    print("-------------------------------------")
-    print("-------------------------------------")
+    print("Stack size: %s" % len(s1))
+    print(s1.toList())
 
-    print("Stack size after search : %s" % len(s1))
-    print("Stack top after search : %s" % s1.top())
+    s1.pop()
+
+    print("Stack size: %s" % len(s1))
+    print(s1.toList())
+
+    s1.appendLeft(111111)
+    s1.append(11111111)
+    s1.append((12, 13, 24, 'kmeans'))
+
+    print("Stack size: %s" % len(s1))
+    print(s1.toList())
+
+    s1.append(False)
+
+    print("Stack size: %s" % len(s1))
+    print(s1.toList())
+
+    s1.popLeft()
+    s1.popLeft()
+    s1.popLeft()
+
+    print("Stack size: %s" % len(s1))
+    print(s1.toList())
+
+
+
+    print(-1%10)

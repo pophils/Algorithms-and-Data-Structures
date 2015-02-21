@@ -24,6 +24,7 @@ class ArrayQueue(AbstractBaseQueue):
         self.__data = [None] * capacity
         self.__size = 0
         self.__front = 0
+        self.__initCapacity = capacity
 
     def enqueue(self, item):
         """
@@ -119,7 +120,9 @@ class ArrayQueue(AbstractBaseQueue):
         """
         Clear all the element of the queue
         """
-        self.__data.clear()
+        self.__data = [None] * self.__initCapacity
+        self.__size = 0
+        self.__front = 0
 
     def size(self):
         return self.__size
