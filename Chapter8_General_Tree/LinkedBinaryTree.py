@@ -4,7 +4,10 @@ from AppException.TreeException import TreeException
 
 class LinkedBinaryTree(BinaryTree):
     """
-    Class gives an Linked implementation of the Binary Tree.
+    Class provides a Linked implementation of the Binary Tree.
+    All methods runs in constant time except for the depth(O(D+1)) where d is the
+    depth of the position and height that runs in O(n) time where n is the number of descendant
+    of position p..
     """
 
     class _Node:
