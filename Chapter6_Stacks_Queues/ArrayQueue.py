@@ -34,7 +34,7 @@ class ArrayQueue(AbstractBaseQueue):
         :param item: item to be added.
         """
         if self.__size == len(self.__data):
-            self.__resize(ceil(self.__size * 2.5))
+            self.__resize(ceil(len(self.__data) * 2))
 
         # len() is called instead of currentLen cos the length of the __data might have changed due to resizing.
         nextEnqueueIndex = (self.__front + self.__size) % len(self.__data)
@@ -57,7 +57,7 @@ class ArrayQueue(AbstractBaseQueue):
         self.__front = (self.__front + 1) % len(self.__data)
 
         if self.__isQueueDueForCompression():
-            self.__resize(ceil(self.__size * 1.5))
+            self.__resize(ceil(len(self.__data) * 2))
 
         return item
 

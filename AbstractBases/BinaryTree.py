@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 from AbstractBases.Tree import Tree
 
 
-class BinaryTree (metaclass=ABCMeta, Tree):
+class BinaryTree (Tree, metaclass=ABCMeta):
     """
     Class provide abstract implementation of a binary Tree ADT.
     """
@@ -52,3 +52,9 @@ class BinaryTree (metaclass=ABCMeta, Tree):
         if rightChild is not None:
             yield rightChild
 
+    @abstractmethod
+    def inOrder(self):
+        """
+        Traverse through the tree by visiting a position
+        after all the positions in its left tree has been visited.
+        """

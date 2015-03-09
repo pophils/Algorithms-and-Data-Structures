@@ -70,13 +70,12 @@ class Tree (metaclass=ABCMeta):
         :return: integer
         """
 
-    @abstractmethod
     def isEmpty(self):
         """
         Return True if tree is empty.
         :return: Boolean
         """
-        return len(self)
+        return len(self) == 0
 
     @abstractmethod
     def __len__(self):
@@ -85,7 +84,6 @@ class Tree (metaclass=ABCMeta):
         :return: integer
         """
 
-    @abstractmethod
     def isLeaf(self, p):
         """
         Returns True if Position p is a leaf
@@ -94,7 +92,6 @@ class Tree (metaclass=ABCMeta):
         """
         return self.numOfChildren(p) == 0
 
-    @abstractmethod
     def isRoot(self, p):
         """
         Returns True if position is the root of the tree.
@@ -103,7 +100,6 @@ class Tree (metaclass=ABCMeta):
         """
         return self.parent(p) is None
 
-    @abstractmethod
     def height(self, p=None):
         """
         Returns the height of the subtree rooted at Position p
@@ -118,7 +114,6 @@ class Tree (metaclass=ABCMeta):
 
         return self.__height(p)
 
-    @abstractmethod
     def __height(self, p):
         """
         Used recursively with height to compute the height of a subtree rooted at position p.
@@ -130,7 +125,6 @@ class Tree (metaclass=ABCMeta):
 
         return 1 + max(self.__height(child) for child in self.children(p))
 
-    @abstractmethod
     def depth(self, p):
         """
         Returns the number of parent a position has with the position exclusive.
@@ -144,5 +138,34 @@ class Tree (metaclass=ABCMeta):
         else:
             return 1 + self.depth(parent)
 
+    @abstractmethod
+    def positions(self):
+        """
+        Returns a generator over the positions of the tree.
+        """
+        pass
 
+    @abstractmethod
+    def elements(self):
+        """
+        Returns a generator over the elements of the tree.
+        """
+        pass
 
+    @abstractmethod
+    def preOrder(self):
+        """
+        Traverse recursively through the element of the tree in a top-down approach
+        """
+
+    @abstractmethod
+    def postOrder(self):
+        """
+        Traverse recursively through the element of the tree in a bottom-up approach
+        """
+
+    @abstractmethod
+    def breadthFirst(self):
+        """
+        Traverse through the tree by moving from depth to depth.
+        """
