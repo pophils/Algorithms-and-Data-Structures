@@ -25,8 +25,11 @@ class LinkedBinaryTree(BinaryTree):
             else:
                 self.__element = e
 
-        def parent(self):
-            return self.__parent
+        def parent(self, node=None):
+            if node is None:
+                return self.__parent
+            else:
+                self.__parent = node
 
         def right(self, node=None):
             if node is None:
@@ -227,35 +230,29 @@ class LinkedBinaryTree(BinaryTree):
         self.__root = None
         self.__size = 0
 
-    def attach(self, p, t1, t2):
+    def attach(self, p, t1):
         """
         Attach two subtrees at position p
         :param p: Position p
-        :param t1: Tree 1
-        :param t2: Tree 2
+        :param t1: Tree to be attached
         :exception raise a TreeException if position is not a leaf.
         """
+
+        if not type(self) is type(t1):
+            raise TypeError("The tree types are not the same.")
+
         node = self.validatePosition(p)
 
-        if node.right() is None or node.left() is None:
+        if node.right() is not None or node.left() is not None:
             raise TreeException("The position,p is not a leaf.")
-        if not type(self) is type(t1) is type(t2):
-            raise TreeException("The tree types are not the same.")
 
         t1Len = len(t1)
-        t2Len = len(t2)
-
-        self.__size += t1Len + t2Len
+        self.__size += t1Len
 
         if t1Len > 0:
             t1.root().node().parent(node)
             node.left(t1.root().node())
             t1.dispose()
-
-        if t2Len > 0:
-            t2.root().node().parent(node)
-            node.right(t2.root().node())
-            t2.dispose()
 
     def postOrder(self):
         """
@@ -378,53 +375,98 @@ if __name__ == '__main__':
     r4 = t.addRight(l3, 'right child4')
     l4 = t.addLeft(l3, 'left child4')
 
-    print("Root Children")
-    for s in t.children(rootPosition):
-        print("\t", s.element())
-
-    print("##########################")
-
-    print("R2 Children")
-    for s in t.children(r2):
-        print("\t", s.element())
-
-    print("##########################")
-
-    print("All elements via pre-order traversal")
-    for s in t.positions():
-        print("\t", s.element())
-
-    print("##########################")
-
-    print("All elements via post-order traversal")
+    print("All t elements via post-order traversal")
     for s in t.positions(1):
         print("\t", s.element())
 
     print("##########################")
 
-    print("All elements via breadth-first traversal")
+    print("All t elements via breadth-first traversal")
     for s in t.positions(2):
         print("\t", s.element())
 
-    print("##########################")
+    print("####################################################")
+    print("####################################################")
 
-    print("All elements via in-order traversal")
-    for s in t.positions(3):
+    t2 = LinkedBinaryTree()
+
+    rootPosition = t2.addRoot('root')
+
+    l1 = t2.addLeft(rootPosition, 'left child')
+    r1 = t2.addRight(rootPosition, 'right child')
+
+    l2 = t2.addLeft(l1, 'left child2')
+    r2 = t2.addRight(r1, 'right child2')
+
+    r3 = t2.addRight(r2, 'right child3')
+    l3 = t2.addLeft(r2, 'left child3')
+
+    r4 = t2.addRight(l3, 'right child4')
+    l41 = t2.addLeft(l3, 'left child4')
+
+    t.attach(l4, t2)
+
+    print("All t elements via post-order traversal after attaching t1")
+    for s in t.positions(1):
         print("\t", s.element())
 
     print("##########################")
 
-    print("Height of tree")
-    print(t.height())
+    print("All t elements via breadth-first traversal after attaching t1")
+    for s in t.positions(2):
+        print("\t", s.element())
 
-    print("##########################")
+    # print("Root Children")
+    # for s in t.children(rootPosition):
+    #     print("\t", s.element())
+    #
+    # print("##########################")
+    #
+    # print("R2 Children")
+    # for s in t.children(r2):
+    #     print("\t", s.element())
+    #
+    # print("##########################")
+    #
+    # print("All elements via pre-order traversal")
+    # for s in t.positions():
+    #     print("\t", s.element())
+    #
+    # print("##########################")
+    #
+    # print("All elements via post-order traversal")
+    # for s in t.positions(1):
+    #     print("\t", s.element())
+    #
+    # print("##########################")
+    #
+    # print("All elements via breadth-first traversal")
+    # for s in t.positions(2):
+    #     print("\t", s.element())
+    #
+    # print("##########################")
+    #
+    # print("All elements via in-order traversal")
+    # for s in t.positions(3):
+    #     print("\t", s.element())
+    #
+    # print("##########################")
+    #
+    # print("Height of tree")
+    # print(t.height())
+    #
+    # print("##########################")
+    #
+    # print("Depth of position R2")
+    # print(t.depth(r2))
+    #
+    # print("##########################")
+    #
+    # print("Depth of tree positions")
+    # depthList = [t.depth(d) for d in t.positions()]
+    #
+    # print(depthList)
 
-    print("Depth of position R2")
-    print(t.depth(r2))
 
-    print("##########################")
 
-    print("Depth of tree positions")
-    depthList = [t.depth(d) for d in t.positions()]
 
-    print(depthList)
