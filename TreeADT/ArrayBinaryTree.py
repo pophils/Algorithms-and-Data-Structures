@@ -205,7 +205,7 @@ class ArrayBinaryTree(AbstractBinaryTree):
 
         self.__data[i] = e
 
-    def dispose(self):
+    def clear(self):
         self.__data = [None]*self.__DefaultCapacity
         self.__size = 0
 
@@ -230,7 +230,7 @@ class ArrayBinaryTree(AbstractBinaryTree):
         # No need to call validatePosition, cos this would have been done when testing if it is leaf
         self.__attachPreOrder(t1, i, t1.root())
 
-        t1.dispose()
+        t1.clear()
 
     def depth(self, i):
         pass
