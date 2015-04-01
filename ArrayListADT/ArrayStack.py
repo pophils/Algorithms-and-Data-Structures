@@ -191,7 +191,7 @@ class ArrayStack(AbstractBaseStack):
 
         return t
 
-from Chapter7_Linked_List.LinkedStack import LinkedStack
+from LinkedListADT.LinkedStack import LinkedStack
 
 if __name__ == '__main__':
     s1 = ArrayStack(1)

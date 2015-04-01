@@ -211,9 +211,9 @@ class ArrayBinaryTree(AbstractBinaryTree):
 
     def attach(self, i, t1):
         """
-        Attach a tree to at index i. It is implemented recursively via a customized pre-order
+        Attach a tree at index i. It is implemented recursively via a customized pre-order
         traversal through the tree.
-        :param i: level numbering
+        :param i: level number
         :param t1: Tree to be attached
         :exception raise a TreeException if position is not a leaf.
         """

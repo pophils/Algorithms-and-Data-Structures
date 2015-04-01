@@ -1,6 +1,6 @@
 from AbstractBases.BinaryTree import BinaryTree
 from AppException.TreeException import TreeException
-from Chapter6_Stacks_Queues.ArrayQueue import ArrayQueue
+from ArrayListADT.ArrayQueue import ArrayQueue
 
 
 class LinkedBinaryTree(BinaryTree):

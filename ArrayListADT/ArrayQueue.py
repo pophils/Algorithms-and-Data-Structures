@@ -1,7 +1,7 @@
 from math import ceil
 from AbstractBases.Queue import Queue as AbstractBaseQueue
 from AppException.QueueException import QueueException
-from Chapter7_Linked_List.LinkedQueue import LinkedQueue
+from LinkedListADT.LinkedQueue import LinkedQueue
 
 
 class ArrayQueue(AbstractBaseQueue):

@@ -1,6 +1,6 @@
 
-from Chapter6_Stacks_Queues.ArrayStack import ArrayStack
-from Chapter6_Stacks_Queues.ArrayQueue import ArrayQueue
+from ArrayListADT.ArrayStack import ArrayStack
+from ArrayListADT.ArrayQueue import ArrayQueue
 from AppException.ExercisesException import ExercisesException
 
 
