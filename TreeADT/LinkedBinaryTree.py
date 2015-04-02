@@ -226,7 +226,7 @@ class LinkedBinaryTree(BinaryTree):
 
         node.__dispose()
 
-    def dispose(self):
+    def clear(self):
         self.__root = None
         self.__size = 0
 
@@ -252,7 +252,7 @@ class LinkedBinaryTree(BinaryTree):
         if t1Len > 0:
             t1.root().node().parent(node)
             node.left(t1.root().node())
-            t1.dispose()
+            t1.clear()
 
     def postOrder(self):
         """
