@@ -406,6 +406,7 @@ if __name__ == '__main__':
 
     t.attach(l4, t2)
 
+
     print("All t elements via post-order traversal after attaching t1")
     for s in t.positions(1):
         print("\t", s.element())
