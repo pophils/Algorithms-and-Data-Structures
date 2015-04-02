@@ -415,9 +415,3 @@ if __name__ == '__main__':
     print("All t elements via breadth-first traversal after attaching t1")
     for s in t.positions(2):
         print("\t", s.element())
-
-
-
-
-
-
