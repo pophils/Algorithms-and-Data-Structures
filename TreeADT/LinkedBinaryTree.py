@@ -416,56 +416,7 @@ if __name__ == '__main__':
     for s in t.positions(2):
         print("\t", s.element())
 
-    # print("Root Children")
-    # for s in t.children(rootPosition):
-    #     print("\t", s.element())
-    #
-    # print("##########################")
-    #
-    # print("R2 Children")
-    # for s in t.children(r2):
-    #     print("\t", s.element())
-    #
-    # print("##########################")
-    #
-    # print("All elements via pre-order traversal")
-    # for s in t.positions():
-    #     print("\t", s.element())
-    #
-    # print("##########################")
-    #
-    # print("All elements via post-order traversal")
-    # for s in t.positions(1):
-    #     print("\t", s.element())
-    #
-    # print("##########################")
-    #
-    # print("All elements via breadth-first traversal")
-    # for s in t.positions(2):
-    #     print("\t", s.element())
-    #
-    # print("##########################")
-    #
-    # print("All elements via in-order traversal")
-    # for s in t.positions(3):
-    #     print("\t", s.element())
-    #
-    # print("##########################")
-    #
-    # print("Height of tree")
-    # print(t.height())
-    #
-    # print("##########################")
-    #
-    # print("Depth of position R2")
-    # print(t.depth(r2))
-    #
-    # print("##########################")
-    #
-    # print("Depth of tree positions")
-    # depthList = [t.depth(d) for d in t.positions()]
-    #
-    # print(depthList)
+
 
 
 
